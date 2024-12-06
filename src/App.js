@@ -124,7 +124,7 @@ function App() {
                 <th>Score</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody style={{fontSize:"35px", fontWeight:"600"}}>
               {students.map((student) => (
                 <tr key={student.name}>
                   <td>{student.name}</td>

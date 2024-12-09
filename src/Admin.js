@@ -68,7 +68,7 @@ function Admin() {
   return (
     <div style={{ padding: '20px' }}>
       <h1>Group Management</h1>
-      <div>
+      <div style={{marginBottom: "40px"}}>
         <input
           type="text"
           name="name"

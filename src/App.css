@@ -1,121 +1,187 @@
-/* Genel Ayarlar */
-body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f4f7fc;
-  margin: 0;
-  padding: 0;
-}
-
-/* Ana Uygulama Alanı */
+/* App.css */
 .App {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  font-family: Arial, sans-serif;
+  text-align: center;
 }
 
-/* İçerik Konteyneri */
 .container {
   display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  width: 90%;
-  max-width: 1200px;
+  flex-direction: row; /* Yan yana yerleştirmek için row kullanıyoruz */
+  gap: 20px; /* Aralarındaki mesafe */
+  align-items: flex-start; /* Üstten hizalama */
+  justify-content: center; /* Ortada hizalama */
+  width: 100%;
 }
 
-/* Timer Bölümü */
-.timer-section {
-  flex: 1;
-  background: #fff;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-
-  display: flex; /* Flex düzeni */
-  flex-direction: column; /* Dikey sıralama */
-  align-items: center; /* Yatayda ortalama */
-  justify-content: center; /* Dikeyde ortalama */
-  text-align: center; /* Metinleri ortalama */
-  gap: 20px; /* Elemanlar arası boşluk */
+.main-content {
+  display: flex;
+  gap: 20px; /* Aralarındaki mesafe */
+  justify-content: center;
+  width: 100%;
+  flex-wrap: wrap; /* Eğer alan yetmezse alt satıra geçebilirler */
 }
 
-/* Grup Sıralama Bölümü */
-.group-ranking-section {
-  flex: 1;
-  background: #fff;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+.timer-section, .group-ranking-section, .message-section {
+  width: 30%; /* Her biri %30 genişliğinde olacak şekilde yan yana */
+  margin-bottom: 20px;
+  flex-grow: 1; /* Eşit şekilde genişlemeleri sağlanacak */
 }
 
-/* Başlıklar */
-h1 {
-  font-size: 24px;
-  color: #333;
+.timer-section h1, .group-ranking-section h1, .message-section h1 {
+  font-size: 36px;
   margin-bottom: 20px;
 }
 
-h2 {
-  font-size: 20px;
-  color: #555;
-}
-
-/* Giriş Alanları */
-input[type="number"],
-input[type="text"] {
-  padding: 15px; /* Daha geniş alan */
-  margin: 10px 0;
-  width: 200px; /* Daha büyük genişlik */
-  border: 1px solid #ddd;
-  border-radius: 5px;
+.timer-section input {
+  padding: 10px;
   font-size: 16px;
+  width: 100px;
 }
 
-/* Düğmeler */
 button {
-  padding: 15px 30px; /* Daha büyük düğmeler */
-  border: none;
-  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th, table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+
+
+.messages-container {
+  height: 300px;
+  overflow-y: auto;
+  background-color: #f3f3f3;
+  padding: 10px;
+  border: 1px solid #ccc;
+  flex-grow: 1; /* Mesajlar alanı daha fazla yer kaplasın */
+}
+
+.message-item {
+  font-size: 18px;
+  margin: 5px 0;
+}
+
+.message-input-section {
+  display: flex;
+  gap: 10px;
+  padding: 10px 0;
+}
+
+.fixed-input {
+  position: sticky;
+  bottom: 0;
+  background-color: white;
+  z-index: 1;
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+/* Yeni eklenen stil: Otomatik kaydırma */
+.messages-container {
+  display: flex;
+  flex-direction: column-reverse; /* Mesajlar son eklenen aşağıda olacak şekilde ters sıralama */
+}
+
+/* Yeni eklenen stil: Kullanıcı adı renkleri */
+strong {
+  font-weight: bold;
+}
+
+/* Yeni eklenen stil: Sabit konumda bulunan yazı kısmı */
+.message-input-section {
+  position: relative;
+  margin-top: 20px;
+}
+
+/* Buton ve inputların hizalanması */
+button, input[type="text"] {
+  margin-top: 10px;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+table th, table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: center;
+}
+
+table th {
   background-color: #4CAF50;
   color: white;
+}
+
+/* Input and button styling */
+input[type="text"], input[type="number"] {
+  padding: 10px;
+  font-size: 16px;
+  width: 250px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
-  margin: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
   background-color: #45a049;
 }
 
-button:disabled {
-  background-color: #ddd;
-  cursor: not-allowed;
+/* Name input and set button section */
+.name-input-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Tablo */
-table {
-  width: 100%;
-  margin-top: 20px;
-  border-collapse: collapse;
+.name-input-section input {
+  padding: 8px;
+  font-size: 16px;
+  width: 250px;
+  margin-bottom: 10px;
 }
 
-th, td {
-  padding: 12px 15px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
+.name-input-section button {
+  width: 150px;
 }
 
-th {
-  background-color: #4CAF50;
-  color: white;
-}
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .main-content {
+    flex-direction: column;
+    gap: 40px;
+  }
 
-tr:hover {
-  background-color: #f1f1f1;
-}
-
-/* Timer Sayacı */
-.timer-section h1 {
-  font-size: 100px;
-  color: #333;
+  .timer-section, .group-ranking-section, .message-section {
+    width: 100%;
+  }
 }

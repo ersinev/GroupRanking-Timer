@@ -168,7 +168,7 @@ function App() {
             <thead>
               <tr><th>Groep</th><th>Score</th></tr>
             </thead>
-            <tbody style={{ fontSize: "35px", fontWeight: "600" }}>
+            <tbody style={{ fontSize: "20px", fontWeight: "600" }}>
               {students.map((student) => (
                 <tr key={student.name}>
                   <td>{student.name}</td>
@@ -197,7 +197,7 @@ function App() {
                 <div className="messages">
                   {messages.map((msg, idx) => (
                     <p key={idx} className="message-item">
-                      <strong style={{ color: userColors.current[msg.username] }}>
+                      <strong style={{ color: userColors.current[msg.username], marginRight:"3px" }}>
                         {msg.username}:
                       </strong> {msg.text}
                     </p>

@@ -64,12 +64,29 @@ table th, table td {
   background-color: #f3f3f3;
   padding: 10px;
   border: 1px solid #ccc;
-  flex-grow: 1; /* Mesajlar alanı daha fazla yer kaplasın */
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
 }
 
 .message-item {
-  font-size: 18px;
+  display: flex;
+  flex-direction: row; /* Mesajı ve ismi yatayda yerleştir */
+  align-items: flex-start; /* Üst kısmı hizalar */
   margin: 5px 0;
+}
+
+.username {
+  margin-right: 10px; /* İsim ile mesaj arasına boşluk bırak */
+  white-space: nowrap; /* İsim uzun olduğunda kırılmasın */
+}
+
+.message-text {
+  flex-grow: 1; /* Mesaj metninin geri kalan alanı kaplamasını sağlar */
+  word-wrap: break-word; /* Uzun metinlerin düzgün kırılmasını sağlar */
+  max-width: calc(100% - 100px); /* Mesaj alanının genişliğini sınırlamak için */
 }
 
 .message-input-section {
@@ -88,11 +105,6 @@ table th, table td {
   gap: 10px;
 }
 
-/* Yeni eklenen stil: Otomatik kaydırma */
-.messages-container {
-  display: flex;
-  flex-direction: column-reverse; /* Mesajlar son eklenen aşağıda olacak şekilde ters sıralama */
-}
 
 /* Yeni eklenen stil: Kullanıcı adı renkleri */
 strong {

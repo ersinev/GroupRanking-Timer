@@ -125,13 +125,11 @@ function App() {
   };
 
   const getRandomColor = () => {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
+    const getComponent = () => Math.floor(Math.random() * 120) + 100;  // 100-220 aralığı
+    const color = `rgb(${getComponent()}, ${getComponent()}, ${getComponent()})`;
     return color;
   };
+  
 
   return (
     <div className="App">
@@ -198,8 +196,9 @@ function App() {
                   {messages.map((msg, idx) => (
                     <p key={idx} className="message-item">
                       <strong style={{ color: userColors.current[msg.username], marginRight:"3px" }}>
-                        {msg.username}:
-                      </strong> {msg.text}
+                        {msg.username.toUpperCase()}:
+                      </strong> 
+                      <span className='msg-text'>{msg.text}</span>
                     </p>
                   ))}
                   <div ref={messagesEndRef} />

@@ -76,6 +76,7 @@ table th, table td {
   flex-direction: row; /* Mesajı ve ismi yatayda yerleştir */
   align-items: flex-start; /* Üst kısmı hizalar */
   margin: 5px 0;
+  align-items: center;
 }
 
 .username {
@@ -83,10 +84,17 @@ table th, table td {
   white-space: nowrap; /* İsim uzun olduğunda kırılmasın */
 }
 
+
 .message-text {
   flex-grow: 1; /* Mesaj metninin geri kalan alanı kaplamasını sağlar */
   word-wrap: break-word; /* Uzun metinlerin düzgün kırılmasını sağlar */
   max-width: calc(100% - 100px); /* Mesaj alanının genişliğini sınırlamak için */
+}
+
+.msg-text{
+  background-color: #6fe173;
+  padding: 5px;
+  border-radius: 10%;
 }
 
 .message-input-section {

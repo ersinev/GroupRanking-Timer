@@ -109,13 +109,13 @@ function App() {
   const handleSendMessage = () => {
     if (newMessage.trim() !== "" && nameSet) {
       const messageData = { username, text: newMessage };
-      socket.emit("sendMessage", messageData); 
-      setNewMessage(""); 
+      socket.emit("sendMessage", messageData);
+      setNewMessage("");
     } else if (!nameSet) {
       alert("Please enter your name first.");
     }
   };
-  
+
   // Enter tuşuna basıldığında mesaj gönder
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
@@ -129,11 +129,33 @@ function App() {
     const color = `rgb(${getComponent()}, ${getComponent()}, ${getComponent()})`;
     return color;
   };
-  
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  // Mesajları kaydırma işlemi için fonksiyon
+const scrollToBottom = () => {
+  messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+};
+
+// Yeni mesajları dinlediğimiz useEffect
+useEffect(() => {
+  const container = messagesEndRef.current?.parentNode;
+
+  if (container) {
+    const isAtBottom =
+      container.scrollHeight - container.scrollTop === container.clientHeight;
+
+    // Kullanıcı en altta ise otomatik kaydır
+    if (isAtBottom) {
+      scrollToBottom();
+    }
+  }
+}, [messages]);
 
   return (
     <div className="App">
-      <h1>Cccccc</h1>
+      <h1>Challange Day</h1>
 
       <div className="container">
         <div className="timer-section">
@@ -192,17 +214,15 @@ function App() {
           ) : (
             <>
               <div className="messages-container">
-                <div className="messages">
-                  {messages.map((msg, idx) => (
-                    <p key={idx} className="message-item">
-                      <strong style={{ color: userColors.current[msg.username], marginRight:"3px" }}>
-                        {msg.username.toUpperCase()}:
-                      </strong> 
-                      <span className='msg-text'>{msg.text}</span>
-                    </p>
-                  ))}
-                  <div ref={messagesEndRef} />
-                </div>
+                {messages.map((msg, idx) => (
+                  <p key={idx} className="message-item">
+                    <strong style={{ color: userColors.current[msg.username], marginRight: "5px" }}>
+                      {msg.username}:
+                    </strong>
+                    <span className="msg-text">{msg.text}</span>
+                  </p>
+                ))}
+                <div ref={messagesEndRef} />
               </div>
 
               <div className="message-input-section fixed-input">
@@ -210,7 +230,7 @@ function App() {
                   type="text"
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
-                  onKeyDown={handleKeyDown} 
+                  onKeyDown={handleKeyDown}
                   placeholder="Type a message..."
                 />
                 <button onClick={handleSendMessage}>Send</button>

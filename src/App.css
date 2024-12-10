@@ -60,30 +60,29 @@ table th, table td {
 
 .messages-container {
   height: 300px;
-  overflow-y: auto;
+  overflow-y: auto;    /* Dikey kaydırma etkin */
+  overflow-x: hidden;  /* Yatay kaydırmayı engelle */
   background-color: #f3f3f3;
   padding: 10px;
   border: 1px solid #ccc;
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-end;
+  
+  
 }
-
 .message-item {
   display: flex;
-  flex-direction: row; /* Mesajı ve ismi yatayda yerleştir */
-  align-items: flex-start; /* Üst kısmı hizalar */
+  align-items: flex-start;
   margin: 5px 0;
+  max-width: 100%;  /* Yatay kaydırmayı önle */
   align-items: center;
+  margin-right: 100px;
 }
 
 .username {
-  margin-right: 10px; /* İsim ile mesaj arasına boşluk bırak */
-  white-space: nowrap; /* İsim uzun olduğunda kırılmasın */
+  margin-right: 8px; /* İsim ile mesaj arasındaki boşluk */
+  white-space: nowrap; /* Uzun kullanıcı adlarını kırma */
 }
-
 
 .message-text {
   flex-grow: 1; /* Mesaj metninin geri kalan alanı kaplamasını sağlar */
@@ -91,12 +90,16 @@ table th, table td {
   max-width: calc(100% - 100px); /* Mesaj alanının genişliğini sınırlamak için */
 }
 
-.msg-text{
+.msg-text {
   background-color: #6fe173;
-  padding: 5px;
-  border-radius: 10%;
+  padding: 4px 5px;
+  border-radius: 8px;
+  word-wrap: break-word;   /* Uzun kelimeleri böl */
+  white-space: pre-wrap;   /* Satır sonlarını koru */
+  max-width: calc(100% - 20px);  /* Kenarlardan uzak dur */
+  display: inline-block;   /* Metne göre genişlik ayarla */
+  overflow-wrap: break-word; /* Taşmayı önle */
 }
-
 .message-input-section {
   display: flex;
   gap: 10px;

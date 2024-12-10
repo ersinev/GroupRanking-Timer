@@ -68,8 +68,9 @@ table th, table td {
   display: flex;
   flex-direction: column;
   
-  
 }
+
+
 .message-item {
   display: flex;
   align-items: flex-start;

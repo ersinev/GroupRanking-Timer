@@ -169,7 +169,7 @@ function Admin() {
           border: '1px solid #ccc', padding: '10px', marginBottom: '10px'
         }}>
           {messages.map((msg, idx) => (
-            <p key={idx}><strong>{msg.username}:</strong> {msg.text}</p>
+            <p key={idx}><strong>{msg.username}:</strong> <span style={{backgroundColor: "#6fe173",padding: "4px 5px",borderRadius: "8px"}}>{msg.text}</span></p>
           ))}
           <div ref={messagesEndRef} />
         </div>

@@ -9,6 +9,10 @@ function Admin() {
   const [newStudent, setNewStudent] = useState({ name: '', score: '' });
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
+  const [timer, setTimer] = useState({ minutes: 0, seconds: 0 });
+  const [inputMinutes, setInputMinutes] = useState(0);
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const [isTimerPaused, setIsTimerPaused] = useState(false);
   const messagesEndRef = useRef(null);
 
   // Fetch initial data
@@ -20,17 +24,60 @@ function Admin() {
     socket.on('studentsUpdated', (updatedStudents) => setStudents(updatedStudents));
     socket.on('allMessages', (allMessages) => setMessages(allMessages));
     socket.on('receiveMessage', (message) => setMessages((prev) => [...prev, message]));
+    socket.on('timerUpdated', (updatedTimer) => setTimer(updatedTimer));
 
     return () => {
       socket.off('studentsUpdated');
       socket.off('allMessages');
       socket.off('receiveMessage');
+      socket.off('timerUpdated');
     };
   }, []);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  // Timer Control
+  const handleStartTimer = async () => {
+    try {
+      await axios.post('http://localhost:3001/api/timer/start', { minutes: inputMinutes });
+      setIsTimerRunning(true);
+      setIsTimerPaused(false);
+    } catch (error) {
+      console.error('Timer start failed:', error);
+    }
+  };
+
+  const handleStopTimer = async () => {
+    try {
+      await axios.post('http://localhost:3001/api/timer/stop');
+      setIsTimerRunning(false);
+      setIsTimerPaused(true);
+    } catch (error) {
+      console.error('Timer stop failed:', error);
+    }
+  };
+
+  const handleResumeTimer = async () => {
+    try {
+      await axios.post('http://localhost:3001/api/timer/resume');
+      setIsTimerPaused(false);
+      setIsTimerRunning(true);
+    } catch (error) {
+      console.error('Timer resume failed:', error);
+    }
+  };
+
+  const handleResetTimer = async () => {
+    try {
+      await axios.post('http://localhost:3001/api/timer/reset');
+      setIsTimerRunning(false);
+      setIsTimerPaused(false);
+    } catch (error) {
+      console.error('Timer reset failed:', error);
+    }
+  };
 
   const handleNewStudentChange = (e) => {
     const { name, value } = e.target;
@@ -96,10 +143,33 @@ function Admin() {
       handleSendMessage();
     }
   };
- //
+
   return (
     <div style={{ padding: '20px', display: 'flex', gap: '50px' }}>
-      {/* Grup Yönetimi */}
+      {/* Timer Section */}
+      <div style={{ width: '300px' }}>
+        <h1>Timer</h1>
+        <input
+          type="number"
+          value={inputMinutes}
+          onChange={(e) => setInputMinutes(e.target.value)}
+          min="0"
+          placeholder="Enter minutes"
+        />
+        {!isTimerRunning && !isTimerPaused && <button onClick={handleStartTimer}>Start Timer</button>}
+        {isTimerRunning && !isTimerPaused && <button onClick={handleStopTimer}>Stop Timer</button>}
+        {isTimerPaused && (
+          <>
+            <button onClick={handleResumeTimer}>Resume Timer</button>
+            <button onClick={handleResetTimer}>Reset Timer</button>
+          </>
+        )}
+        <h2 style={{ fontSize: "50px" }}>
+          {timer.minutes}:{timer.seconds < 10 ? '0' + timer.seconds : timer.seconds}
+        </h2>
+      </div>
+
+      {/* Group Management */}
       <div>
         <h1>Group Management</h1>
         <div style={{ marginBottom: "20px" }}>
@@ -154,7 +224,7 @@ function Admin() {
         </table>
       </div>
 
-      {/* Mesajlaşma Bölümü */}
+      {/* Message Section */}
       <div>
         <h1>Messages</h1>
         <button
@@ -169,7 +239,7 @@ function Admin() {
           border: '1px solid #ccc', padding: '10px', marginBottom: '10px'
         }}>
           {messages.map((msg, idx) => (
-            <p key={idx}><strong>{msg.username}:</strong> <span style={{backgroundColor: "#6fe173",padding: "4px 5px",borderRadius: "8px"}}>{msg.text}</span></p>
+            <p key={idx}><strong>{msg.username}:</strong> <span style={{ backgroundColor: "#6fe173", padding: "4px 5px", borderRadius: "8px" }}>{msg.text}</span></p>
           ))}
           <div ref={messagesEndRef} />
         </div>

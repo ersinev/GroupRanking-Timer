@@ -156,7 +156,7 @@ useEffect(() => {
 
   return (
     <div className="App">
-      <h1>Challange Day</h1>
+      <h1>Challenge Day</h1>
 
       <div className="container">
         <div className="timer-section">

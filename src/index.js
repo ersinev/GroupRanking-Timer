@@ -1,15 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';  // React 18 ve sonrasında createRoot kullanılır
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import App from './App';
-import Admin from './Admin'; // Yönetim sayfası
+import Admin from './Admin';
 
-ReactDOM.render(
+const root = createRoot(document.getElementById('root'));
+
+root.render(
   <Router>
     <Routes>
-      <Route path="/" element={<App />} /> {/* Anasayfa */}
-      <Route path="/admin" element={<Admin />} /> {/* Admin sayfası */}
+      <Route path="/" element={<App />} />
+      <Route path="/admin" element={<Admin />} />
     </Routes>
-  </Router>,
-  document.getElementById('root')
+  </Router>
 );

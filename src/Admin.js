@@ -3,7 +3,7 @@ import axios from 'axios';
 import io from 'socket.io-client';
 
 //const url = `http://localhost:3001`
-const url = `https://groupranking-timer-backend.onrender.com/`
+const url = `https://groupranking-timer-backend.onrender.com`
 const socket = io(url);
 
 function Admin() {

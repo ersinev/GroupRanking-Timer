@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import io from 'socket.io-client';
 import axios from 'axios';
 import './App.css';
-const url = `https://challengeday.netlify.app`
+const url = `https://groupranking-timer-backend.onrender.com`
 //const url = `http://localhost:3001`
 const socket = io(url); // Backend ile bağlantı
 

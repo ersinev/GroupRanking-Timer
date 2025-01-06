@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import io from 'socket.io-client';
 
-const socket = io('http://localhost:3001');
+//const url = `http://localhost:3001`
+const url = `https://groupranking-timer-backend.onrender.com/`
+const socket = io(url);
 
 function Admin() {
   const [students, setStudents] = useState([]);
@@ -15,9 +17,28 @@ function Admin() {
   const [isTimerPaused, setIsTimerPaused] = useState(false);
   const messagesEndRef = useRef(null);
 
+  // Group emoji mapping
+  const groupEmojiMapping = {
+    1: '😊',
+    2: '🎉',
+    3: '🚀',
+    4: '🌞',
+    5: '💡',
+    6: '🔥',
+    7: '🌍',
+    8: '👾',
+    9: '🍀',
+    10: '💎',
+    11: '✨',
+    12: '🎯',
+    13: '🌈',
+    14: '🍕',
+    
+};
+
   // Fetch initial data
   useEffect(() => {
-    axios.get('http://localhost:3001/api/students')
+    axios.get(`${url}/api/students`)
       .then((response) => setStudents(response.data))
       .catch((error) => console.error('Error fetching students:', error));
 
@@ -41,7 +62,7 @@ function Admin() {
   // Timer Control
   const handleStartTimer = async () => {
     try {
-      await axios.post('http://localhost:3001/api/timer/start', { minutes: inputMinutes });
+      await axios.post(`${url}/api/timer/start`, { minutes: inputMinutes });
       setIsTimerRunning(true);
       setIsTimerPaused(false);
     } catch (error) {
@@ -51,7 +72,7 @@ function Admin() {
 
   const handleStopTimer = async () => {
     try {
-      await axios.post('http://localhost:3001/api/timer/stop');
+      await axios.post(`${url}/api/timer/stop`);
       setIsTimerRunning(false);
       setIsTimerPaused(true);
     } catch (error) {
@@ -61,7 +82,7 @@ function Admin() {
 
   const handleResumeTimer = async () => {
     try {
-      await axios.post('http://localhost:3001/api/timer/resume');
+      await axios.post(`${url}/api/timer/resume`);
       setIsTimerPaused(false);
       setIsTimerRunning(true);
     } catch (error) {
@@ -71,7 +92,7 @@ function Admin() {
 
   const handleResetTimer = async () => {
     try {
-      await axios.post('http://localhost:3001/api/timer/reset');
+      await axios.post(`${url}/api/timer/reset`);
       setIsTimerRunning(false);
       setIsTimerPaused(false);
     } catch (error) {
@@ -91,7 +112,7 @@ function Admin() {
     }
 
     try {
-      await axios.post('http://localhost:3001/api/students', {
+      await axios.post(`${url}/api/students`, {
         name: newStudent.name,
         score: parseFloat(newStudent.score),
       });
@@ -103,7 +124,7 @@ function Admin() {
 
   const handleDeleteStudent = async (name) => {
     try {
-      await axios.delete(`http://localhost:3001/api/students/${name}`);
+      await axios.delete(`${url}/api/students/${name}`);
     } catch (error) {
       console.error('Error deleting student:', error);
     }
@@ -112,7 +133,7 @@ function Admin() {
   const handleUpdateScore = async (name, newScore) => {
     if (isNaN(newScore)) return;
     try {
-      await axios.put(`http://localhost:3001/api/students/${name}`, {
+      await axios.put(`${url}/api/students/${name}`, {
         score: parseFloat(newScore),
       });
     } catch (error) {
@@ -122,7 +143,7 @@ function Admin() {
 
   const handleDeleteAllMessages = async () => {
     try {
-      await axios.post('http://localhost:3001/api/messages/deleteAll');
+      await axios.post(`${url}/api/messages/deleteAll`);
       setMessages([]);
     } catch (error) {
       console.error('Error deleting messages:', error);
@@ -150,7 +171,7 @@ function Admin() {
       <div style={{ width: '300px' }}>
         <h1>Timer</h1>
         <input
-          type="number"
+          type="number"cd
           value={inputMinutes}
           onChange={(e) => setInputMinutes(e.target.value)}
           min="0"
@@ -169,6 +190,7 @@ function Admin() {
         </h2>
       </div>
 
+      
       {/* Group Management */}
       <div>
         <h1>Group Management</h1>
@@ -191,6 +213,31 @@ function Admin() {
           />
           <button onClick={handleAddStudent}>Add Group</button>
         </div>
+        {/* Group Reference Table */}
+      <div style={{ width: '300px' }}>
+        <h3>Group Reference</h3>
+        <table style={{ border: '1px solid black', width: '100%', marginBottom: '20px' }}>
+          <thead>
+            <tr>
+              {Object.keys(groupEmojiMapping).map((groupNumber) => (
+                <th key={groupNumber} style={{ textAlign: 'center', padding: '10px' }}>
+                  G{groupNumber}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              {Object.keys(groupEmojiMapping).map((groupNumber) => (
+                <td key={groupNumber} style={{ textAlign: 'center', padding: '10px' }}>
+                  {groupEmojiMapping[groupNumber]}
+                </td>
+              ))}
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
         <table>
           <thead>
             <tr>

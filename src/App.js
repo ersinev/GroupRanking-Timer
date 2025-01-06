@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import io from 'socket.io-client';
 import axios from 'axios';
 import './App.css';
-
-const socket = io('http://localhost:3001'); // Backend ile bağlantı
+//const url = `https://challengeday.netlify.app`
+const url = `http://localhost:3001`
+const socket = io(url); // Backend ile bağlantı
 
 function App() {
   const [timer, setTimer] = useState({ minutes: 0, seconds: 0 });
@@ -29,7 +30,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    axios.get('http://localhost:3001/api/students')
+    axios.get(`${url}/api/students`)
       .then((response) => setStudents(response.data))
       .catch((error) => console.error('Error fetching students:', error));
 
@@ -60,7 +61,7 @@ function App() {
 
   const handleStart = async () => {
     try {
-      await axios.post('http://localhost:3001/api/timer/start', { minutes: inputMinutes });
+      await axios.post(`${url}/api/timer/start`, { minutes: inputMinutes });
       setIsTimerRunning(true);
       setIsTimerPaused(false);
     } catch (error) {
@@ -70,7 +71,7 @@ function App() {
 
   const handleStop = async () => {
     try {
-      await axios.post('http://localhost:3001/api/timer/stop');
+      await axios.post(`${url}/api/timer/stop`);
       setIsTimerRunning(false);
       setIsTimerPaused(true);
     } catch (error) {
@@ -80,7 +81,7 @@ function App() {
 
   const handleResume = async () => {
     try {
-      await axios.post('http://localhost:3001/api/timer/resume');
+      await axios.post(`${url}/api/timer/resume`);
       setIsTimerPaused(false);
       setIsTimerRunning(true);
     } catch (error) {
@@ -90,7 +91,7 @@ function App() {
 
   const handleReset = async () => {
     try {
-      await axios.post('http://localhost:3001/api/timer/reset');
+      await axios.post(`${url}/api/timer/reset`);
       setIsTimerRunning(false);
       setIsTimerPaused(false);
     } catch (error) {

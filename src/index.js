@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import App from './App';
 import Admin from './Admin';
 import PageNotFound from './PageNotFound';
+import GroupRanking from './GroupRanking';
 
 const root = createRoot(document.getElementById('root'));
 
@@ -12,6 +13,7 @@ root.render(
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="/admin" element={<Admin />} />
+      <Route path='/ranking' element = {<GroupRanking/>}/>
       <Route path='*' element = {<PageNotFound/>}/>
     </Routes>
   </Router>

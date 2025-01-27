@@ -178,7 +178,10 @@ useEffect(() => {
               </>
             )}
           </div>
-          <h1 style={{ fontSize: "100px" }}>
+          <h1 style={{
+                    fontSize: "100px",
+                    color: timer.minutes < 5 ? 'red' : 'black'  // 5 dakikadan azsa kırmızı, değilse siyah
+                }}>
             {timer.minutes}:{timer.seconds < 10 ? '0' + timer.seconds : timer.seconds}
           </h1>
         </div>
